@@ -32,7 +32,7 @@ export default function lucy(options = {}) {
         let out;
         try {
           // liblucy before 0.7 only made the declarations when asked.
-          out = compile(source, id, { dts: true });
+          out = compile(source, id);
         } catch(err) {
           const error = err.diagnostics?.find(d => d.severity === 'error');
           if(!error) {
