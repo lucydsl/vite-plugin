@@ -1,0 +1,9 @@
+machine toggle {
+  initial state off {
+    flip => on
+  }
+
+  state on {
+    flip => off
+  }
+}

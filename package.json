@@ -1,0 +1,44 @@
+{
+  "name": "@lucy/vite",
+  "version": "0.1.0",
+  "description": "Vite plugin for Lucy: import .lucy files as JavaScript state machines",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    }
+  },
+  "types": "./src/index.d.ts",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucydsl/vite-plugin.git"
+  },
+  "keywords": [
+    "lucy",
+    "vite-plugin",
+    "rolldown-plugin",
+    "state-machine"
+  ],
+  "author": "Matthew Phillips <matthew@matthewphillips.info>",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/lucydsl/vite-plugin/issues"
+  },
+  "homepage": "https://lucy.spooky.click/install/#vite",
+  "dependencies": {
+    "@lucy/liblucy": "^0.6.0"
+  },
+  "peerDependencies": {
+    "vite": "^6.3.0 || ^7.0.0 || ^8.0.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.8"
+  }
+}

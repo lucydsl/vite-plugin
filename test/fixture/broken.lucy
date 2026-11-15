@@ -1,0 +1,4 @@
+machine broken {
+  initial state off {
+    flip =>
+  }
