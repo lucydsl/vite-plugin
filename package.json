@@ -1,6 +1,6 @@
 {
   "name": "@lucy/vite",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Vite plugin for Lucy: import .lucy files as JavaScript state machines",
   "type": "module",
   "exports": {
