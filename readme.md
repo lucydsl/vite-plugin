@@ -49,15 +49,21 @@ console.log(toggle.state); // 'on'
 
 It works in the dev server and in builds. A file that doesn't compile fails the build, with the error's file and line.
 
+## TypeScript
+
+The plugin writes TypeScript declarations beside each `.lucy` file as it compiles it: `toggle.lucy` gets `toggle.lucy.d.ts`, which TypeScript reads for `import './toggle.lucy'` with no extra configuration. The states, the events `send` takes and the options the machine needs are all typed.
+
+The declarations are written when Vite compiles the file, so a new machine has types once the dev server or a build has seen it. Whether to commit them is up to you: commit them and type checking works on a fresh clone; otherwise add `*.lucy.d.ts` to your `.gitignore` and build before you type check.
+
 ## Options
 
 ### dts
 
 ```js
-lucy({ dts: true })
+lucy({ dts: false })
 ```
 
-Writes TypeScript declarations beside each `.lucy` file as it is compiled: `toggle.lucy` gets `toggle.d.lucy.ts`. Turn on TypeScript's [`allowArbitraryExtensions`](https://www.typescriptlang.org/tsconfig/#allowArbitraryExtensions) option and imports of `.lucy` files are typed. The declarations are experimental. You may want `*.d.lucy.ts` in your `.gitignore`.
+Stops the plugin writing the declarations. They are on by default.
 
 ## Requirements
 

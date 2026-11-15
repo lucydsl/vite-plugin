@@ -1,4 +1,4 @@
-import { test } from 'node:test';
+import { after, test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, rm } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -6,6 +6,10 @@ import { build, createServer } from 'vite';
 import lucy from '@lucy/vite';
 
 const root = fileURLToPath(new URL('./fixture/', import.meta.url));
+const declarations = new URL('./fixture/toggle.lucy.d.ts', import.meta.url);
+
+// Every compile of toggle.lucy writes its declarations.
+after(() => rm(declarations, { force: true }));
 
 function config(entry, options) {
   return {
@@ -64,9 +68,14 @@ test('a compile error names the file and the line', async () => {
   });
 });
 
-test('dts writes declarations beside the source', async t => {
-  const file = new URL('./fixture/toggle.d.lucy.ts', import.meta.url);
-  t.after(() => rm(file, { force: true }));
-  await build(config('toggle.lucy', { dts: true }));
-  assert.match(await readFile(file, 'utf8'), /export function createToggle</);
+test('the declarations are written beside the source', async () => {
+  await rm(declarations, { force: true });
+  await build(config('toggle.lucy'));
+  assert.match(await readFile(declarations, 'utf8'), /export function createToggle</);
+});
+
+test('dts: false writes no declarations', async () => {
+  await rm(declarations, { force: true });
+  await build(config('toggle.lucy', { dts: false }));
+  await assert.rejects(readFile(declarations), { code: 'ENOENT' });
 });

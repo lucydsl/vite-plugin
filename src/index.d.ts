@@ -3,8 +3,8 @@ import type { Plugin } from 'vite';
 export interface LucyOptions {
   /**
    * Write TypeScript declarations beside each .lucy file as it is
-   * compiled: toggle.lucy gets toggle.d.lucy.ts. TypeScript reads them
-   * when its allowArbitraryExtensions option is on. Experimental.
+   * compiled: toggle.lucy gets toggle.lucy.d.ts, which types imports of
+   * './toggle.lucy'. On by default; false turns it off.
    */
   dts?: boolean;
 }

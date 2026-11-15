@@ -11,7 +11,7 @@ const lucyId = /\.lucy$/;
  * @returns {import('vite').Plugin}
  */
 export default function lucy(options = {}) {
-  const dts = !!options.dts;
+  const dts = options.dts ?? true;
 
   return {
     name: 'lucy',
@@ -31,7 +31,8 @@ export default function lucy(options = {}) {
 
         let out;
         try {
-          out = compile(source, id, { dts });
+          // liblucy before 0.7 only made the declarations when asked.
+          out = compile(source, id, { dts: true });
         } catch(err) {
           const error = err.diagnostics?.find(d => d.severity === 'error');
           if(!error) {
@@ -60,11 +61,11 @@ export default function lucy(options = {}) {
   };
 }
 
-// TypeScript reads the types of toggle.lucy from toggle.d.lucy.ts, with
+// TypeScript reads the types of toggle.lucy from toggle.lucy.d.ts, with
 // its allowArbitraryExtensions option. The file is left alone when it's
 // already right, so that nothing watching it sees a change.
 async function writeDeclarations(id, text) {
-  const file = id.replace(lucyId, '.d.lucy.ts');
+  const file = id.replace(lucyId, '.lucy.d.ts');
   const current = await readFile(file, 'utf8').catch(() => null);
   if(current !== text) {
     await writeFile(file, text);
